@@ -6,9 +6,9 @@ const Header = () => {
                 <div className="logo">
                     <img src={logo} alt="" />
                 </div>
-                <h3>
+                <h1>
                     Root Cause Analysis <span>(Powered by AI)</span>
-                </h3>
+                </h1>
                 <p>
                     Identify and resolve issues faster with intelligent AI-driven insights.
                 </p>

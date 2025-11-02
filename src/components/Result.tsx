@@ -7,9 +7,9 @@ const Result = () => {
                     <thead>
                         <tr>
                             <th className="name">Root Cause</th>
-                            <th>Probability</th>
-                            <th>Contributing Factors</th>
-                            <th>Root Cause Explanation</th>
+                            <th className="w-sm">Probability</th>
+                            <th className="w-md">Contributing Factors</th>
+                            <th className="w-md">Root Cause Explanation</th>
                         </tr>
                     </thead>
                     <tbody>
