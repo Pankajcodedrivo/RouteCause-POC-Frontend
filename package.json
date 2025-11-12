@@ -1,5 +1,5 @@
 {
-  "name": "insurance-quote",
+  "name": "routecause-poc",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.13.1",
     "bootstrap": "^5.3.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.5"
+    "react-router-dom": "^7.9.5",
+    "sweetalert2": "^11.26.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
