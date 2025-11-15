@@ -514,7 +514,12 @@ textarea.form-control {
   gap: 12px;
   margin-top: 16px;
 }
-
+.feedback-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+}
 @keyframes slideUp {
   from {
     transform: translateY(30px);
