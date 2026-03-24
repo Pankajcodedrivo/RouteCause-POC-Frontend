@@ -181,7 +181,7 @@ const Result: React.FC<ResultProps> = ({ data }) => {
           </small>
         </div>
 
-        <div className="text-center button-group mt-30">
+        <div className="text-center button-group p-0 mt-30">
           <button className="btn btn-primary">
             Download Report
           </button>
