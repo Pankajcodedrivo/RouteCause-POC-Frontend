@@ -4,10 +4,10 @@ import { sendEmail } from "../service/api.service";
 
 interface EmailPopupProps {
   onClose: () => void;
-  data: any; // you can type this as ResultData if needed
+  report_id: string;
 }
 
-const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, data }) => {
+const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, report_id }) => {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -26,12 +26,19 @@ const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, data }) => {
     setSending(true);
 
     try {
-      const res = await sendEmail({ email, data });
+      const emailData = {
+        recipient_emails: [email],
+        subject:  `Root Cause Analysis Report - ${report_id}`,
+        message:  `Please find attached the Root Cause Analysis Report.\n\nReport ID: ${report_id}\n\nBest regards,\nAIQE System`,
+      };
+
+      const res = await sendEmail(report_id, emailData);
+      
       if (res.success) {
         showSuccessToast("Email sent successfully!");
         onClose();
       } else {
-        showErrorToast("Failed to send email. Try again later.");
+        showErrorToast(res.message || "Failed to send email. Try again later.");
       }
     } catch (err) {
       console.error("Email send error:", err);
@@ -45,13 +52,20 @@ const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, data }) => {
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
         <h4>Send Report via Email</h4>
-        <input
-          type="email"
-          className="form-control mb-20"
-          placeholder="Enter recipient email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        
+        <div className="form-group mb-20">
+          <label htmlFor="email">Email *</label>
+          <input
+            id="email"
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={sending}
+          />
+        </div>
+        
 
         <div className="popup-actions">
           <button
@@ -61,7 +75,11 @@ const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, data }) => {
           >
             {sending ? "Sending..." : "Send Email"}
           </button>
-          <button className="btn btn-secondary" onClick={onClose}>
+          <button 
+            className="btn btn-secondary" 
+            onClick={onClose}
+            disabled={sending}
+          >
             Cancel
           </button>
         </div>
