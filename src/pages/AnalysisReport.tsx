@@ -17,6 +17,7 @@ interface ReportJson {
   };
   sections: Section[];
   timestamp?: string;
+  input_hash?:string;
 }
 
 interface ApiResponse {

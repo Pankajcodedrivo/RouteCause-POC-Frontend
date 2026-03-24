@@ -34,7 +34,7 @@ const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, report_id }) => {
 
       const res = await sendEmail(report_id, emailData);
       
-      if (res.success) {
+      if (res.status==="sent") {
         showSuccessToast("Email sent successfully!");
         onClose();
       } else {
@@ -54,7 +54,6 @@ const EmailPopup: React.FC<EmailPopupProps> = ({ onClose, report_id }) => {
         <h4>Send Report via Email</h4>
         
         <div className="form-group mb-20">
-          <label htmlFor="email">Email *</label>
           <input
             id="email"
             type="email"

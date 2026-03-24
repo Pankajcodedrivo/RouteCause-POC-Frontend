@@ -6,8 +6,8 @@ export const analyzeForm = catchAsync(async (postdata: any) => {
   return data;
 });
 
-export const sendEmail = catchAsync(async (postdata: any) => {
-  const data = await httpsCall.post(`/sendEmail`,postdata);
+export const sendEmail = catchAsync(async (report_id,postdata: any) => {
+  const data = await httpsCall.post(`/report/${report_id}/email`,postdata);
   return data;
 });
 

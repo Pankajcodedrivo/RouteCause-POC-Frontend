@@ -15,6 +15,7 @@ interface ReportJson {
   };
   sections: Section[];
   timestamp?: string;
+  input_hash?:string;
 }
 
 interface ApiResponse {
@@ -177,6 +178,9 @@ const Result: React.FC<ResultProps> = ({ data }) => {
         </div>
 
         <div className="text-center button-group mt-30">
+          <button className="btn btn-primary">
+            Download Report
+          </button>
           <button
             className="btn btn-secondary"
             onClick={() => setShowEmailPopup(true)}
