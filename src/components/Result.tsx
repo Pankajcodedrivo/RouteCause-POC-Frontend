@@ -133,17 +133,14 @@ const Result: React.FC<ResultProps> = ({ data }) => {
             {diagnosticEvidenceSection && (
               <div className="cmn-card h-100">
                 <h5 className="result-hdr">{diagnosticEvidenceSection.title}</h5>
-                <div className="term-innr">
-                  <ul className="root-causes-list">
-                    {diagnosticEvidenceSection.content.split("\n").map((line, idx) => {
+                <ul className="root-causes-list no-decimle">
+                  {diagnosticEvidenceSection.content.split("\n").map((line, idx) => {
+                  
+                      return <li key={idx}>{line}</li>;
                     
-                        return <li key={idx}>{line}</li>;
-                     
-                     
-                    }).filter(Boolean)}
-                  </ul>
-              
-                </div>
+                    
+                  }).filter(Boolean)}
+                </ul>
               </div>
             )}
           </div>

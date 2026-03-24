@@ -719,6 +719,20 @@ footer {
     font-size: 11px;
     word-break: break-all;
 }
+.root-causes-list.no-decimle {
+    padding-left: 0;
+}
+.root-causes-list.no-decimle li {
+    list-style-type: none;
+    padding-left: 20px;
+    position: relative;
+}
+.root-causes-list.no-decimle li:after {
+    position: absolute;
+    content: '✔';
+    left: 0;
+    top:2px;
+}
 @media (max-width: 767px) {
     .card-result {
   padding: 25px;
