@@ -22,7 +22,7 @@ interface ApiResponse {
   report_id: string;
   confidence: string;
   report_json: ReportJson;
- 
+
 }
 
 interface ResultProps {
@@ -39,23 +39,23 @@ const Result: React.FC<ResultProps> = ({ data }) => {
   const parseRootCauses = (content: string) => {
     const rootCauses = [];
     const lines = content.split("\n");
-    
+
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
-      
+
       // Match pattern: "Design / Geometry Sensitivity (Primary Driver): Product geometry..."
       const match = line.match(/^(.+?)\s+\((Primary Driver|Secondary Contributor|Conditional Amplifier)\):\s*(.+)$/);
-      
+
       if (match) {
         const causeName = match[1];
         const causeType = match[2];
         const explanation = match[3];
-        
+
         let probability = "";
         if (causeType === "Primary Driver") probability = "High";
         else if (causeType === "Secondary Contributor") probability = "Medium";
         else if (causeType === "Conditional Amplifier") probability = "Variable";
-        
+
         rootCauses.push({
           cause: causeName,
           probability,
@@ -64,7 +64,7 @@ const Result: React.FC<ResultProps> = ({ data }) => {
         });
       }
     }
-    
+
     return rootCauses;
   };
 
@@ -78,22 +78,19 @@ const Result: React.FC<ResultProps> = ({ data }) => {
 
   return (
     <>
-      <div className="card-custom mb-0 pe-0 ps-0">
+      <div className="card-custom card-result mb-0">
         {/* Header */}
         {header && (
-          <div className="report-header mb-30">
-            <h5>Root Cause Analysis Report</h5>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="logo">
-                    <img src={logo} alt="" />
-                </div>
+          <div className="report-header">
+            <div className="d-flex report-content">
+              <div className="logo">
+                <img src={logo} alt="" />
               </div>
-              <div className="col-md-6">
+              <div>
+                <h5>Root Cause Analysis Report</h5>
                 <p><strong>Part/Process:</strong> {header.part_process}</p>
-                 <p><strong>Analysis Confidence:</strong> <span className="badge bg-info">{confidence || header.analysis_confidence}</span> {header.defect_symptom}</p>
+                <p><strong>Analysis Confidence:</strong> <span className="badge bg-info">{confidence || header.analysis_confidence}</span> {header.defect_symptom}</p>
                 <p><strong>Problem Statement:</strong> {header.defect_symptom}</p>
-               
               </div>
             </div>
           </div>
@@ -103,8 +100,8 @@ const Result: React.FC<ResultProps> = ({ data }) => {
         {sections.map((section, index) => {
           if (section.title === "Executive Diagnostic Summary") {
             return (
-              <div key={index} className="mb-30">
-                <h5>{section.title}</h5>
+              <div key={index} className="mb-3 cmn-card">
+                <h5 className="result-hdr">{section.title}</h5>
                 <div className="term-innr">
                   <p style={{ whiteSpace: "pre-line" }}>{section.content}</p>
                 </div>
@@ -116,53 +113,55 @@ const Result: React.FC<ResultProps> = ({ data }) => {
 
         {/* Most Likely Root Cause Hypotheses (Ranked) */}
         {rootCausesSection && (
-          <div className="mb-30">
-            <h5>{rootCausesSection.title}</h5>
-            <div className="root-causes-list">
+          <div className="mb-3 cmn-card">
+            <h5 className="result-hdr grey">{rootCausesSection.title}</h5>
+            <ul className="root-causes-list">
               {rootCauses.map((item, index) => (
-                <div key={index} className="root-cause-item mb-4">
+                <li key={index} className="root-cause-item">
                   <h6>
                     {item.cause} ({item.causeType})
                   </h6>
                   <p>{item.explanation}</p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
-
-        {/* Diagnostic Evidence */}
-        {diagnosticEvidenceSection && (
-          <div className="mb-30">
-            <h5>{diagnosticEvidenceSection.title}</h5>
-            <div className="term-innr">
-              <p style={{ whiteSpace: "pre-line" }}>{diagnosticEvidenceSection.content}</p>
-            </div>
+        <div className="row m-0 mb-3">
+          <div className="col-lg-6 p-0">
+            {/* Diagnostic Evidence */}
+            {diagnosticEvidenceSection && (
+              <div className="cmn-card h-100">
+                <h5 className="result-hdr">{diagnosticEvidenceSection.title}</h5>
+                <div className="term-innr">
+                  <p style={{ whiteSpace: "pre-line" }}>{diagnosticEvidenceSection.content}</p>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-
-        {/* Recommended Testing / Validation */}
-        {recommendationsSection && (
-          <div className="mb-30">
-            <h5>{recommendationsSection.title}</h5>
-            <div className="term-innr">
-              <ol>
-                {recommendationsSection.content.split("\n").map((line, idx) => {
-                  const match = line.match(/^\d+\.\s+(.+)$/);
-                  if (match) {
-                    return <li key={idx}>{match[1]}</li>;
-                  }
-                  return null;
-                }).filter(Boolean)}
-              </ol>
-            </div>
+          <div className="col-lg-6 p-0">
+            {/* Recommended Testing / Validation */}
+            {recommendationsSection && (
+              <div className="cmn-card h-100">
+                <h5 className="result-hdr">{recommendationsSection.title}</h5>
+                  <ul className="root-causes-list">
+                    {recommendationsSection.content.split("\n").map((line, idx) => {
+                      const match = line.match(/^\d+\.\s+(.+)$/);
+                      if (match) {
+                        return <li key={idx}>{match[1]}</li>;
+                      }
+                      return null;
+                    }).filter(Boolean)}
+                  </ul>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Analysis Confidence Statement */}
         {confidenceStatementSection && (
-          <div className="mb-30">
-            <h5>{confidenceStatementSection.title}</h5>
+          <div className="cmn-card">
+            <h5 className="result-hdr grey">{confidenceStatementSection.title}</h5>
             <div className="term-innr">
               <p>{confidenceStatementSection.content}</p>
             </div>
@@ -170,9 +169,9 @@ const Result: React.FC<ResultProps> = ({ data }) => {
         )}
 
         {/* Footer */}
-        <div className="report-footer text-muted mt-30 pt-3 border-top">
+        <div className="report-footer text-muted mt-30 pt-2 mt-3 mb-3 border-top">
           <small>
-            Generated on: {timestamp ? new Date(timestamp).toLocaleString() : new Date().toLocaleString()}<br />
+            Generated on: {timestamp ? new Date(timestamp).toLocaleString() : new Date().toLocaleString()} |
             Report ID: {report_id} | Input Hash: {report_json.input_hash}
           </small>
         </div>
@@ -182,7 +181,7 @@ const Result: React.FC<ResultProps> = ({ data }) => {
             Download Report
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-primary"
             onClick={() => setShowEmailPopup(true)}
           >
             Send Email
@@ -192,9 +191,9 @@ const Result: React.FC<ResultProps> = ({ data }) => {
 
       {/* Popup */}
       {showEmailPopup && (
-        <EmailPopup 
-          report_id={report_id} 
-          onClose={() => setShowEmailPopup(false)} 
+        <EmailPopup
+          report_id={report_id}
+          onClose={() => setShowEmailPopup(false)}
         />
       )}
     </>

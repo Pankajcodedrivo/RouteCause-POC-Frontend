@@ -632,3 +632,110 @@ footer {
   padding: 14px 30px;
 }
 }
+/* 24-3 */
+.report-content {
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #000;
+}
+.report-content .logo {
+    margin: 0;
+    max-width: 80px;
+    min-width: 80px;
+}
+.card-result {
+    padding: 50px;
+}
+.card-result.card-custom h5 {
+    padding: 0;
+    margin-bottom: 10px;
+}
+.card-result.card-custom .report-header h5 {
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    color: #000;
+}
+.card-result.card-custom .report-header p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.card-result.card-custom .result-hdr {
+    color: var(--color-white);
+    background: var(--color-primary);
+    padding: 10px 15px;
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 0;
+    letter-spacing: 0.5px;
+}
+.card-result.card-custom .result-hdr.grey {
+    background: #E6E6E6;
+    color: #000;
+}
+.cmn-card {
+    border: 2px solid #E6E6E6;
+}
+.cmn-card .term-innr {
+    background: transparent;
+    padding: 15px;
+}
+.root-causes-list {
+    padding: 15px;
+    margin-left: 20px;
+}
+.root-causes-list li {
+    list-style-type: decimal;
+    margin-bottom: 10px;
+    font-size: 14px;
+    h6 {
+        font-weight: 700;
+    }
+}
+.root-causes-list li:last-child {
+    margin-bottom: 0;
+}
+.root-causes-list li h6 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.root-causes-list li p {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+.root-causes-list li::marker {
+    font-weight: 700;
+}
+.cmn-card .term-innr ol {
+    padding-left: 0;
+}
+.report-footer small {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    word-break: break-all;
+}
+@media (max-width: 767px) {
+    .card-result {
+  padding: 25px;
+}
+.card-result.card-custom .report-header h5 {
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+.report-content .logo {
+  max-width: 60px;
+  min-width: 60px;
+}
+}
+@media (max-width: 575px) {
+    .report-content {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+}
