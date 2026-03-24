@@ -134,7 +134,15 @@ const Result: React.FC<ResultProps> = ({ data }) => {
               <div className="cmn-card h-100">
                 <h5 className="result-hdr">{diagnosticEvidenceSection.title}</h5>
                 <div className="term-innr">
-                  <p style={{ whiteSpace: "pre-line" }}>{diagnosticEvidenceSection.content}</p>
+                  <ul className="root-causes-list">
+                    {diagnosticEvidenceSection.content.split("\n").map((line, idx) => {
+                    
+                        return <li key={idx}>{line}</li>;
+                     
+                     
+                    }).filter(Boolean)}
+                  </ul>
+              
                 </div>
               </div>
             )}
