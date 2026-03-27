@@ -11,8 +11,8 @@ export const sendEmail = catchAsync(async (report_id,postdata: any) => {
   return data;
 });
 
-export const sendFeedback = catchAsync(async (report_id,postdata: any) => {
-  const data = await httpsCall.post(`/report/${report_id}/email`,postdata);
+export const sendFeedback = catchAsync(async (postdata: any) => {
+  const data = await httpsCall.post(`/feedback`,postdata);
   return data;
 });
 export const downloadReportPdf = async (report_id: string) => {

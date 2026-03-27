@@ -19,7 +19,7 @@ const FeedbackPopup: React.FC<FeedbackPopupProps> = ({ onClose }) => {
     setSending(true);
 
     try {
-      const res = await sendFeedback({ feedback: message });
+      const res = await sendFeedback({ comment: message });
 
       if (res.success) {
         showSuccessToast("Feedback sent successfully!");
