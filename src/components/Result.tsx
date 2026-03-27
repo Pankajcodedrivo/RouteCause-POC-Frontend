@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EmailPopup from "./EmailPopup";
 import logo from '../assets/images/logo.svg'
+import { downloadReportPdf } from "../service/api.service";
 interface Section {
   title: string;
   content: string;
@@ -76,6 +77,37 @@ const Result: React.FC<ResultProps> = ({ data }) => {
 
   const rootCauses = rootCausesSection ? parseRootCauses(rootCausesSection.content) : [];
 
+  const handleDownload = async () => {
+      try {
+        const res = await downloadReportPdf(report_id);
+
+        const blob = new Blob([res.data], { type: "application/pdf" });
+
+        // Extract filename from headers
+        const contentDisposition = res.headers["content-disposition"];
+        let filename = `report-${report_id}.pdf`;
+
+        if (contentDisposition) {
+          const match = contentDisposition.match(/filename="(.+)"/);
+          if (match) filename = match[1];
+        }
+
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+
+      } catch (err) {
+        console.error("Download failed:", err);
+      }
+    };
   return (
     <>
       <div className="card-custom card-result mb-0">
@@ -182,7 +214,7 @@ const Result: React.FC<ResultProps> = ({ data }) => {
         </div>
 
         <div className="text-center button-group mt-30">
-          <button className="btn btn-primary">
+          <button className="btn btn-primary"  onClick={handleDownload}>
             Download Report
           </button>
           <button
